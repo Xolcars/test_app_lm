@@ -13,7 +13,7 @@ data class BeerListResponse(
 
 @Parcelize
 data class BeerBean(
-    @SerializedName("id") var id: Int,
+    @SerializedName("id") var id: String,
     @SerializedName("nameDisplay") var name: String,
     @SerializedName("description") var description: String?,
     @SerializedName("foodPairings") var foodPairings: String?,

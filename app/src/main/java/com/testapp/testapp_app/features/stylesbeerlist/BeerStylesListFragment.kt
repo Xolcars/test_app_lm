@@ -47,7 +47,8 @@ class BeerStylesListFragment: BaseFragment(), BeerStyleAdapter.OnItemListDelegat
     }
 
     private fun setUpViews() {
-        viewModel.getServicesRequest()
+        showProgressDialog()
+        viewModel.getRandomBeer()
         refreshRecycler?.setOnRefreshListener {
             viewModel.getServicesRequest()
         }
@@ -55,10 +56,22 @@ class BeerStylesListFragment: BaseFragment(), BeerStyleAdapter.OnItemListDelegat
 
     //region Observers
     private fun observers() {
+        //Random Beer request
+        randomBeerObserver()
+        onErrorRandomBeerObserver()
+        //Beer Styles request
         isLoadingObserver()
         servicesListObserver()
         onErrorObserver()
         isEmptyObserver()
+    }
+
+    private fun randomBeerObserver() {
+        viewModel.randomBeer.observe(viewLifecycleOwner, Observer {
+            hideProgressDialog()
+            viewModel.getServicesRequest()
+            //TODO: Show dialog with random beer
+        })
     }
 
     private fun servicesListObserver() {
@@ -76,6 +89,18 @@ class BeerStylesListFragment: BaseFragment(), BeerStyleAdapter.OnItemListDelegat
     private fun onErrorObserver() {
         viewModel.onError.observe(viewLifecycleOwner, Observer { onError ->
             if(onError == true) {
+                view?.let {view ->
+                    showError(getString(R.string.network_error), view)
+                }
+            }
+        })
+    }
+
+    private fun onErrorRandomBeerObserver() {
+        viewModel.onErrorRandomBeer.observe(viewLifecycleOwner, Observer { onError ->
+            if(onError == true) {
+                hideProgressDialog()
+                viewModel.getServicesRequest()
                 view?.let {view ->
                     showError(getString(R.string.network_error), view)
                 }

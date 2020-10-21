@@ -3,6 +3,7 @@ package com.testapp.testapp_app.features.stylesbeerlist
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.testapp.testapp_app.models.BeerBean
 import com.testapp.testapp_app.models.BeerStyleBean
 import com.testapp.testapp_app.setup.network.ApiRepository
 import com.testapp.testapp_app.setup.network.ResponseResult
@@ -14,6 +15,11 @@ class BeerStylesListViewModel(private val repository: ApiRepository): ViewModel(
     //region Vars
     private var _beerStylesList = MutableLiveData<MutableList<BeerStyleBean>>()
     val beerStylesList: LiveData<MutableList<BeerStyleBean>> = _beerStylesList
+
+    private var _randomBeer = MutableLiveData<BeerBean>()
+    val randomBeer: LiveData<BeerBean> = _randomBeer
+    private var _onErrorRandomBeer = MutableLiveData<Boolean>()
+    val onErrorRandomBeer: LiveData<Boolean> = _onErrorRandomBeer
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -44,6 +50,22 @@ class BeerStylesListViewModel(private val repository: ApiRepository): ViewModel(
                     _isEmpty.value = true
                     _isLoading.value = false
                     _beerStylesList.value = ArrayList()
+                }
+            }
+        }
+    }
+
+    fun getRandomBeer() {
+        GlobalScope.launch(Dispatchers.Main) {
+            _onErrorRandomBeer.value = false
+            when(val response = repository.getRandomBeer()) {
+                is ResponseResult.Success -> {
+                    _randomBeer.value = response.value.data
+                }
+                is ResponseResult.Error -> {
+                    _onErrorRandomBeer.value = true
+                }
+                is ResponseResult.NotContent -> {
                 }
             }
         }
