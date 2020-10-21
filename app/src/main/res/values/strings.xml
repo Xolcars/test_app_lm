@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">TestApp</string>
+
+    <string name="network_error">An error has occurred</string>
+    <string name="operation_ok">Operation carried out correctly.</string>
+    <string name="network_down">You can not connect to the server, check your connection.</string>
+    <string name="network_down_timeout">Waiting time exceeded, check your connection.</string>
+    <string name="loading">Loading…</string>
+
+    <string name="category">Category:</string>
+    <string name="detail">Detail</string>
+    <string name="opening_hours">Horario de apertura</string>
+    <string name="not_content">No hay ningún servicio disponible</string>
+    <string name="abv_percent">%s\%% - %s\%% Alcohol percent</string>
+</resources>
