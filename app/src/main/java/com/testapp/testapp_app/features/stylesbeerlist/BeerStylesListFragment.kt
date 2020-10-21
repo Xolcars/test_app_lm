@@ -1,14 +1,21 @@
 package com.testapp.testapp_app.features.stylesbeerlist
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.testapp.testapp_app.R
+import com.testapp.testapp_app.models.BeerBean
 import com.testapp.testapp_app.models.BeerStyleBean
 import com.testapp.testapp_app.setup.BaseFragment
+import com.testapp.testapp_app.setup.extensions.showProgressDialog
+import kotlinx.android.synthetic.main.dialog_random_beer.*
 import kotlinx.android.synthetic.main.fragment_services_list.*
 import org.koin.android.ext.android.inject
 
@@ -54,6 +61,21 @@ class BeerStylesListFragment: BaseFragment(), BeerStyleAdapter.OnItemListDelegat
         }
     }
 
+    private fun showDialogRandomBeer(randomBeer: BeerBean) {
+        context?.let {
+            Dialog(it).apply {
+                setCancelable(true)
+                setContentView(R.layout.dialog_random_beer)
+
+                //Fill dialog UI:
+                textRBName?.text = randomBeer.name
+
+                window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                show()
+            }
+        }
+    }
+
     //region Observers
     private fun observers() {
         //Random Beer request
@@ -69,8 +91,8 @@ class BeerStylesListFragment: BaseFragment(), BeerStyleAdapter.OnItemListDelegat
     private fun randomBeerObserver() {
         viewModel.randomBeer.observe(viewLifecycleOwner, Observer {
             hideProgressDialog()
+            showDialogRandomBeer(it)
             viewModel.getServicesRequest()
-            //TODO: Show dialog with random beer
         })
     }
 
