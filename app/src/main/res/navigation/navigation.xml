@@ -6,7 +6,7 @@
     app:startDestination="@id/servicesListFragment">
     <fragment
         android:id="@+id/servicesListFragment"
-        android:name="com.testapp.testapp_app.features.serviceslist.BeerStylesListFragment"
+        android:name="com.testapp.testapp_app.features.stylesbeerlist.BeerStylesListFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_services_list">
 <!--        <action-->

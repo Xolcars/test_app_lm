@@ -1,4 +1,4 @@
-package com.testapp.testapp_app.features.serviceslist
+package com.testapp.testapp_app.features.stylesbeerlist
 
 import android.content.Context
 import android.view.LayoutInflater

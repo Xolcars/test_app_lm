@@ -1,4 +1,4 @@
-package com.testapp.testapp_app.features.serviceslist
+package com.testapp.testapp_app.features.stylesbeerlist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
