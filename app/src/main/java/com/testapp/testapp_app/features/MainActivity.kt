@@ -11,7 +11,6 @@ import com.testapp.testapp_app.setup.BaseActivity
 class MainActivity: BaseActivity() {
     //region Vars
     private val navController by lazy { findNavController(R.id.fragment) }
-    //private val appBarConfiguration by lazy { AppBarConfiguration(navController.graph) }
     //endregion
 
     //region Override Methods
