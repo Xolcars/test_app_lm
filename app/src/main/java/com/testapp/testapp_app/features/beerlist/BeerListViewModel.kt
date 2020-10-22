@@ -1,19 +1,19 @@
-package com.testapp.testapp_app.features.stylesbeerlist
+package com.testapp.testapp_app.features.beerlist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.testapp.testapp_app.models.BeerStyleBean
+import com.testapp.testapp_app.models.BeerBean
 import com.testapp.testapp_app.setup.network.ApiRepository
 import com.testapp.testapp_app.setup.network.ResponseResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class BeerStylesListViewModel(private val repository: ApiRepository): ViewModel() {
+class BeerListViewModel(private val repository: ApiRepository) : ViewModel() {
     //region Vars
-    private var _beerStylesList = MutableLiveData<MutableList<BeerStyleBean>>()
-    val beerStylesList: LiveData<MutableList<BeerStyleBean>> = _beerStylesList
+    private var _beerList = MutableLiveData<MutableList<BeerBean>>()
+    val beerList: LiveData<MutableList<BeerBean>> = _beerList
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -26,14 +26,22 @@ class BeerStylesListViewModel(private val repository: ApiRepository): ViewModel(
     //endregion Vars
 
     //region Methods
-    fun getBeerStylesListRequest() {
+    fun getBeersListByStyleRequest(styleSelected: Int, page: Int) {
         _isLoading.value = true
         _onError.value = false
         _isEmpty.value = false
         GlobalScope.launch(Dispatchers.Main) {
-            when(val response = repository.getBeerStylesList()) {
+            when (val response = repository.getBeerListByStyle(
+                styleId = styleSelected,
+                page = page
+            )) {
                 is ResponseResult.Success -> {
-                    _beerStylesList.value = response.value.data
+                    if(response.value.data.isNullOrEmpty()) {
+                        _isEmpty.value = true
+                        _beerList.value = ArrayList()
+                    } else {
+                        _beerList.value = response.value.data
+                    }
                     _isLoading.value = false
                 }
                 is ResponseResult.Error -> {
@@ -43,7 +51,7 @@ class BeerStylesListViewModel(private val repository: ApiRepository): ViewModel(
                 is ResponseResult.NotContent -> {
                     _isEmpty.value = true
                     _isLoading.value = false
-                    _beerStylesList.value = ArrayList()
+                    _beerList.value = ArrayList()
                 }
             }
         }
@@ -51,6 +59,6 @@ class BeerStylesListViewModel(private val repository: ApiRepository): ViewModel(
     //endregion Methods
 
     companion object {
-        private val LOGTAG: String = BeerStylesListViewModel::class.java.simpleName
+        private val LOGTAG: String = BeerListViewModel::class.java.simpleName
     }
 }

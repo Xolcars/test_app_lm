@@ -9,7 +9,7 @@
 
     <string name="category">Category:</string>
     <string name="detail">Detail</string>
-    <string name="opening_hours">Horario de apertura</string>
-    <string name="not_content">No hay ningún servicio disponible</string>
+    <string name="not_content">No content available</string>
     <string name="abv_percent">%s\%% - %s\%% Alcohol percent</string>
+    <string name="abv_percent_one">%s\%%</string>
 </resources>

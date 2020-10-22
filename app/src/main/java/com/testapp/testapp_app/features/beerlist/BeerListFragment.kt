@@ -1,28 +1,34 @@
-package com.testapp.testapp_app.features.stylesbeerlist
+package com.testapp.testapp_app.features.beerlist
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.testapp.testapp_app.R
-import com.testapp.testapp_app.models.BeerStyleBean
+import com.testapp.testapp_app.models.BeerBean
 import com.testapp.testapp_app.setup.BaseFragment
 import kotlinx.android.synthetic.main.fragment_beer_style_list.*
 import org.koin.android.ext.android.inject
 
-class BeerStylesListFragment: BaseFragment(), BeerStyleAdapter.OnItemListDelegate {
+class BeerListFragment: BaseFragment(), BeerAdapter.OnItemListDelegate {
     //region Vars
-    private val viewModel: BeerStylesListViewModel by inject()
-    private lateinit var adapter: BeerStyleAdapter
+    private val viewModel: BeerListViewModel by inject()
+    private lateinit var adapter: BeerAdapter
+
+    private val selectedStyle by lazy {
+        arguments?.let {
+            BeerListFragmentArgs.fromBundle(it).styleSelected
+        } ?: 0
+    }
     //endregion Vars
 
     //region Override Methods
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_beer_style_list, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_beer_list, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,25 +38,25 @@ class BeerStylesListFragment: BaseFragment(), BeerStyleAdapter.OnItemListDelegat
         observers()
     }
 
-    override fun onItemClicked(item: BeerStyleBean) {
-        val action = BeerStylesListFragmentDirections.actionStylesToBeersList(item.id)
-        findNavController().navigate(action)
+    override fun onItemClicked(item: BeerBean) {
+        //val action = ServicesListFragmentDirections.actionServicesListFragmentToServiceDetailFragment(item)
+        //findNavController().navigate(action)
     }
     //endregion Override Methods
 
     //region Methods
     private fun initRecyclerAdapter() {
-        recyclerView?.layoutManager = LinearLayoutManager(context)
+        recyclerView?.layoutManager = GridLayoutManager(context, 3)
         context?.let { context ->
-            adapter = BeerStyleAdapter(context, viewModel.beerStylesList.value ?: mutableListOf(), this)
+            adapter = BeerAdapter(context, viewModel.beerList.value ?: mutableListOf(), this)
         }
         recyclerView?.adapter = adapter
     }
 
     private fun setUpViews() {
-        viewModel.getBeerStylesListRequest()
+        viewModel.getBeersListByStyleRequest(selectedStyle, 1)
         refreshRecycler?.setOnRefreshListener {
-            viewModel.getBeerStylesListRequest()
+            //viewModel.getBeersListByStyleRequest(selectedStyle, 1)
         }
     }
 
@@ -63,7 +69,7 @@ class BeerStylesListFragment: BaseFragment(), BeerStyleAdapter.OnItemListDelegat
     }
 
     private fun servicesListObserver() {
-        viewModel.beerStylesList.observe(viewLifecycleOwner, Observer {
+        viewModel.beerList.observe(viewLifecycleOwner, Observer {
             adapter.update(it)
         })
     }
@@ -96,6 +102,6 @@ class BeerStylesListFragment: BaseFragment(), BeerStyleAdapter.OnItemListDelegat
     //endregion Methods
 
     companion object {
-        private val LOGTAG: String = BeerStylesListFragment::class.java.simpleName
+        private val LOGTAG: String = BeerListFragment::class.java.simpleName
     }
 }
