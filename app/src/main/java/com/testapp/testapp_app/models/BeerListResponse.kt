@@ -20,7 +20,7 @@ data class BeerBean(
     @SerializedName("abv") var abv: String?,
     @SerializedName("isRetired") var isRetired: Boolean,
     @SerializedName("style") var style: BeerStyleBean?,
-    @SerializedName("labels") var images: ArrayList<PhotoBean>?
+    @SerializedName("labels") var images:PhotoBean?
 ): Parcelable
 
 @Parcelize

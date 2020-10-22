@@ -1,5 +1,6 @@
 package com.testapp.testapp_app.features.stylesbeerlist
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -10,11 +11,13 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.squareup.picasso.Picasso
 import com.testapp.testapp_app.R
 import com.testapp.testapp_app.models.BeerBean
 import com.testapp.testapp_app.models.BeerStyleBean
 import com.testapp.testapp_app.setup.BaseFragment
 import com.testapp.testapp_app.setup.extensions.showProgressDialog
+import kotlinx.android.synthetic.main.cell_beer_style_item.view.*
 import kotlinx.android.synthetic.main.dialog_random_beer.*
 import kotlinx.android.synthetic.main.fragment_services_list.*
 import org.koin.android.ext.android.inject
@@ -67,8 +70,7 @@ class BeerStylesListFragment: BaseFragment(), BeerStyleAdapter.OnItemListDelegat
                 setCancelable(true)
                 setContentView(R.layout.dialog_random_beer)
 
-                //Fill dialog UI:
-                textRBName?.text = randomBeer.name
+                fillDialogUI(randomBeer)
 
                 window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                 show()
@@ -76,12 +78,21 @@ class BeerStylesListFragment: BaseFragment(), BeerStyleAdapter.OnItemListDelegat
         }
     }
 
+    private fun fillDialogUI(randomBeer: BeerBean) {
+        textRBName?.text = randomBeer.name
+        if(!randomBeer.abv.isNullOrBlank())
+            textRBabv?.text = getString(R.string.abv_percent_random_beer, randomBeer.abv)
+
+        val urlImage = randomBeer.images?.large ?: "https://p2d7x8x2.stackpathcdn.com/wordpress/wp-content/uploads/2020/03/iStock-1040303026.jpg"
+        Picasso.get().load(urlImage).into(imageRandomBeer)
+    }
+
     //region Observers
     private fun observers() {
-        //Random Beer request
+        //Random Beer request:
         randomBeerObserver()
         onErrorRandomBeerObserver()
-        //Beer Styles request
+        //Beer Styles request:
         isLoadingObserver()
         servicesListObserver()
         onErrorObserver()
