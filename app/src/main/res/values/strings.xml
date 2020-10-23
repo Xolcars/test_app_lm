@@ -13,7 +13,7 @@
     <string name="not_content">No hay ningún servicio disponible</string>
     <string name="abv_percent">%s\%% - %s\%% Alcohol percent</string>
     <string name="abv_percent_random_beer">%s\%%</string>
-    <string name="new_random_beer_title">Discover a new random beer</string>
+    <string name="new_random_beer_title">Discover Today\'s new random beer</string>
     <string name="beer_image_cd">Beer Image</string>
     <string name="see_details">See details</string>
     <string name="close">Close</string>

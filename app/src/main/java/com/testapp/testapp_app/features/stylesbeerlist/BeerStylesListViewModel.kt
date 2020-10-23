@@ -5,13 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.testapp.testapp_app.models.BeerBean
 import com.testapp.testapp_app.models.BeerStyleBean
+import com.testapp.testapp_app.setup.Prefs
 import com.testapp.testapp_app.setup.network.ApiRepository
 import com.testapp.testapp_app.setup.network.ResponseResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
-class BeerStylesListViewModel(private val repository: ApiRepository): ViewModel() {
+class BeerStylesListViewModel(private val repository: ApiRepository, private val prefs: Prefs): ViewModel() {
     //region Vars
     private var _beerStylesList = MutableLiveData<MutableList<BeerStyleBean>>()
     val beerStylesList: LiveData<MutableList<BeerStyleBean>> = _beerStylesList
@@ -56,6 +60,7 @@ class BeerStylesListViewModel(private val repository: ApiRepository): ViewModel(
     }
 
     fun getRandomBeer() {
+        prefs.lastDayConnected = getTodayDateAsString()
         GlobalScope.launch(Dispatchers.Main) {
             _onErrorRandomBeer.value = false
             when(val response = repository.getRandomBeer()) {
@@ -69,6 +74,17 @@ class BeerStylesListViewModel(private val repository: ApiRepository): ViewModel(
                 }
             }
         }
+    }
+
+    private fun getTodayDateAsString(): String {
+        val calendar = Calendar.getInstance()
+        val date = calendar.time
+
+        return SimpleDateFormat("dd/MM/yyyy", Locale.US).format(date)
+    }
+
+    fun needRequestRandomBeer(): Boolean {
+        return !prefs.lastDayConnected.equals(getTodayDateAsString())
     }
     //endregion Methods
 

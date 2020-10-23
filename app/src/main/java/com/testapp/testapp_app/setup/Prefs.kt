@@ -9,6 +9,8 @@ class Prefs(context: Context) {
     private val FILENAME = "${BuildConfig.APPLICATION_ID}.prefs"
 
     private val TOKEN = "TOKEN"
+
+    private val LAST_DAY_CONNECTED = "LAST_DAY_CONNECTED"
     //endregion
 
     private val prefs: SharedPreferences =
@@ -21,6 +23,9 @@ class Prefs(context: Context) {
     //endregion
 
     //region OtherPrefs
+    var lastDayConnected: String?
+        get() = prefs.getString(LAST_DAY_CONNECTED, "")
+        set(value) = prefs.edit().putString(LAST_DAY_CONNECTED, value).apply()
     //endregion
 
     //region Clear and remove Prefs
