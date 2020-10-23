@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -65,19 +64,24 @@ class BeerStylesListFragment: BaseFragment(), BeerStyleAdapter.OnItemListDelegat
     private fun doInitialRequest() {
         if(viewModel.needRequestRandomBeer()) {
             showProgressDialog()
+            viewModel.randomBeer.observe(viewLifecycleOwner, randomBeerObserver)
+            viewModel.onErrorRandomBeer.observe(viewLifecycleOwner, onErrorRandomBeerObserver)
             viewModel.getRandomBeer()
         } else {
-            viewModel.getServicesRequest()
+            viewModel.getBeerStylesListRequest()
         }
     }
 
     private fun showDialogRandomBeer(randomBeer: BeerBean) {
+        viewModel.randomBeer.removeObserver(randomBeerObserver)
+        viewModel.onErrorRandomBeer.removeObserver(onErrorRandomBeerObserver)
         context?.let {
             Dialog(it).apply {
                 setCancelable(true)
                 setContentView(R.layout.dialog_random_beer)
 
                 fillDialogUI(this, randomBeer)
+                setDialogButtonsActions(this)
 
                 window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                 show()
@@ -85,6 +89,16 @@ class BeerStylesListFragment: BaseFragment(), BeerStyleAdapter.OnItemListDelegat
         }
     }
 
+    private fun setDialogButtonsActions(dialog: Dialog) {
+        dialog.buttonSeeDetails?.setOnClickListener {
+            //TODO: Open beer details
+        }
+        dialog.buttonClose?.setOnClickListener {
+            dialog.cancel()
+        }
+    }
+
+    @SuppressLint("StringFormatInvalid")
     private fun fillDialogUI(dialog: Dialog, randomBeer: BeerBean) {
         dialog.textRBName?.text = randomBeer.name
         if(!randomBeer.abv.isNullOrBlank())
@@ -96,25 +110,27 @@ class BeerStylesListFragment: BaseFragment(), BeerStyleAdapter.OnItemListDelegat
 
     //region Observers
     private fun observers() {
-        //Random Beer request:
-        randomBeerObserver()
-        onErrorRandomBeerObserver()
-        //Beer Styles request:
         isLoadingObserver()
-        servicesListObserver()
+        beerStylesListObserver()
         onErrorObserver()
         isEmptyObserver()
     }
 
-    private fun randomBeerObserver() {
-        viewModel.randomBeer.observe(viewLifecycleOwner, Observer {
-            hideProgressDialog()
-            showDialogRandomBeer(it)
-            viewModel.getBeerStylesListRequest()
-        })
+    private val randomBeerObserver = Observer<BeerBean> {
+        hideProgressDialog()
+        showDialogRandomBeer(it)
+        viewModel.getBeerStylesListRequest()
     }
 
-    private fun servicesListObserver() {
+    private val onErrorRandomBeerObserver = Observer<Boolean> { onError ->
+        if(onError == true) {
+            view?.let {view ->
+                showError(getString(R.string.network_error), view)
+            }
+        }
+    }
+
+    private fun beerStylesListObserver() {
         viewModel.beerStylesList.observe(viewLifecycleOwner, Observer {
             adapter.update(it)
         })
