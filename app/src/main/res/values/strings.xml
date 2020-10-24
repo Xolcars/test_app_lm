@@ -11,7 +11,7 @@
     <string name="detail">Detail</string>
     <string name="not_content">No content available</string>
     <string name="abv_percent">%s\%% - %s\%% Alcohol percent</string>
-    <string name="abv_percent_one">%s\%%</string>
+    <string name="abv_percent_one">%s\%% Alcohol</string>
 
     <string name="abv_percent_random_beer">%s\%%</string>
     <string name="new_random_beer_title">Discover Today\'s new random beer</string>
