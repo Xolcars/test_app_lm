@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.testapp.testapp_app.R
@@ -39,8 +40,8 @@ class BeerListFragment: BaseFragment(), BeerAdapter.OnItemListDelegate {
     }
 
     override fun onItemClicked(item: BeerBean) {
-        //val action = ServicesListFragmentDirections.actionServicesListFragmentToServiceDetailFragment(item)
-        //findNavController().navigate(action)
+        val action = BeerListFragmentDirections.actionBeerLisToDetail(item)
+        findNavController().navigate(action)
     }
     //endregion Override Methods
 
@@ -56,7 +57,7 @@ class BeerListFragment: BaseFragment(), BeerAdapter.OnItemListDelegate {
     private fun setUpViews() {
         viewModel.getBeersListByStyleRequest(selectedStyle, 1)
         refreshRecycler?.setOnRefreshListener {
-            //viewModel.getBeersListByStyleRequest(selectedStyle, 1)
+            viewModel.getBeersListByStyleRequest(selectedStyle, 1)
         }
     }
 
