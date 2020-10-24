@@ -66,7 +66,7 @@ class BeerAdapter(private val context: Context,
             } else {
                 view.textBeerAbv?.text = ""
             }
-            Picasso.get().load(item.images?.medium).into(view.imageBeer)
+            Picasso.get().load(item.images?.medium).placeholder(R.drawable.ic_launcher_foreground).into(view.imageBeer)
         }
     }
     //endregion ViewHolder
