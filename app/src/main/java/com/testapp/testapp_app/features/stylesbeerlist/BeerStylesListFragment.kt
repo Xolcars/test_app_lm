@@ -152,18 +152,6 @@ class BeerStylesListFragment: BaseFragment(), BeerStyleAdapter.OnItemListDelegat
         })
     }
 
-    private fun onErrorRandomBeerObserver() {
-        viewModel.onErrorRandomBeer.observe(viewLifecycleOwner, Observer { onError ->
-            if(onError == true) {
-                hideProgressDialog()
-                viewModel.getBeerStylesListRequest()
-                view?.let {view ->
-                    showError(getString(R.string.network_error), view)
-                }
-            }
-        })
-    }
-
     private fun isEmptyObserver() {
         viewModel.isEmpty.observe(viewLifecycleOwner, Observer {
             when(it) {
