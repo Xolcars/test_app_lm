@@ -18,4 +18,8 @@
     <string name="beer_image_cd">Beer Image</string>
     <string name="see_details">See details</string>
     <string name="close">Close</string>
+    <string name="food_pairing">Try to match this beer with %s</string>
+    <string name="beer_retired">This beer are retired</string>
+    <string name="beer_not_retired">On Sale</string>
+    <string name="what_you_want">what you want</string>
 </resources>
