@@ -104,7 +104,7 @@ class BeerStylesListFragment: BaseFragment(), BeerStyleAdapter.OnItemListDelegat
         if(!randomBeer.abv.isNullOrBlank())
             dialog.textRBabv?.text = getString(R.string.abv_percent_random_beer, randomBeer.abv)
 
-        val urlImage = randomBeer.images?.large ?: "https://p2d7x8x2.stackpathcdn.com/wordpress/wp-content/uploads/2020/03/iStock-1040303026.jpg"
+        val urlImage = randomBeer.images?.large ?: getString(R.string.image_beer_placeholder_url)
         Picasso.get().load(urlImage).into( dialog.imageRandomBeer)
     }
 

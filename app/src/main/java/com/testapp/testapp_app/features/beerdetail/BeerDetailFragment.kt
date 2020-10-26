@@ -4,12 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
+import com.squareup.picasso.Picasso
 import com.testapp.testapp_app.R
-import com.testapp.testapp_app.features.beerlist.BeerListFragmentArgs
-import com.testapp.testapp_app.models.BeerBean
 import com.testapp.testapp_app.setup.BaseFragment
 import kotlinx.android.synthetic.main.fragment_beer_detail.*
 import org.koin.android.ext.android.inject
@@ -36,7 +33,7 @@ class BeerDetailFragment: BaseFragment() {
 
         setupViewPager()
         setupViewModel()
-
+        fillUI()
     }
     //endregion Override Methods
 
@@ -46,7 +43,14 @@ class BeerDetailFragment: BaseFragment() {
         viewPager.adapter = viewPagerAdapter
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = "Testing $position"
+            when(position) {
+                TabSelectedPosition.INFO_TAB.value -> {
+                    tab.text = getString(R.string.info)
+                }
+                TabSelectedPosition.MORE_TAB.value -> {
+                    tab.text = getString(R.string.more)
+                }
+            }
         }.attach()
     }
 
@@ -54,6 +58,14 @@ class BeerDetailFragment: BaseFragment() {
         selectedBeer?.let {
             viewModel.setBeerItem(it)
         }
+    }
+
+    private fun fillUI() {
+        titleBeer?.text = selectedBeer?.name
+        textAbvBeer?.text = selectedBeer?.abv
+        Picasso.get()
+            .load(selectedBeer?.images?.large ?: getString(R.string.image_beer_placeholder_url))
+            .placeholder(R.drawable.ic_launcher_foreground).into(imageBeer)
     }
     //endregion Methods
 
