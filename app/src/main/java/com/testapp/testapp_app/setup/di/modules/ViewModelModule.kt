@@ -9,5 +9,5 @@ import org.koin.dsl.module
 val viewModelModule = module {
     viewModel { BeerStylesListViewModel(get(), get()) }
     viewModel { BeerListViewModel(get()) }
-    single { BeerDetailViewModel() }
+    single { BeerDetailViewModel(get()) }
 }

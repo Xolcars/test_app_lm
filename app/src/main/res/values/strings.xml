@@ -25,4 +25,6 @@
     <string name="image_beer_placeholder_url">https://p2d7x8x2.stackpathcdn.com/wordpress/wp-content/uploads/2020/03/iStock-1040303026.jpg</string>
     <string name="info">INFO</string>
     <string name="more">MORE</string>
+    <string name="add_to_favs">Add to Favs</string>
+    <string name="remove_to_favs">Remove to Favs</string>
 </resources>

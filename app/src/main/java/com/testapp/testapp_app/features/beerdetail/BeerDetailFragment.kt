@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayoutMediator
 import com.squareup.picasso.Picasso
 import com.testapp.testapp_app.R
@@ -34,6 +35,7 @@ class BeerDetailFragment: BaseFragment() {
         setupViewPager()
         setupViewModel()
         fillUI()
+        buttonFavSetOnClickListener()
     }
     //endregion Override Methods
 
@@ -66,6 +68,27 @@ class BeerDetailFragment: BaseFragment() {
         Picasso.get()
             .load(selectedBeer?.images?.large ?: getString(R.string.image_beer_placeholder_url))
             .placeholder(R.drawable.ic_launcher_foreground).into(imageBeer)
+        fillButtonUI()
+    }
+
+    private fun buttonFavSetOnClickListener() {
+        buttonFav?.setOnClickListener {
+            selectedBeer?.let {
+                when(viewModel.isBeerOnFavs()) {
+                    true -> viewModel.removeBeerToFavs(it)
+                    false -> viewModel.addBeerToFavs(it)
+                }
+                fillButtonUI()
+            }
+        }
+    }
+
+    private fun fillButtonUI() {
+        if(viewModel.isBeerOnFavs()) {
+            buttonFav?.text = getString(R.string.remove_to_favs)
+        } else {
+            buttonFav?.text = getString(R.string.add_to_favs)
+        }
     }
     //endregion Methods
 
