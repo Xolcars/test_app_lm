@@ -27,4 +27,9 @@
     <string name="more">MORE</string>
     <string name="add_to_favs">Add to Favs</string>
     <string name="remove_to_favs">Remove to Favs</string>
+
+    <string name="app_fragment_styles">Beer Styles</string>
+    <string name="app_fragment_beers">Beers</string>
+    <string name="app_fragment_detail">Beer Detail</string>
+    <string name="fav">Fav</string>
 </resources>

@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
 import com.testapp.testapp_app.R
+import com.testapp.testapp_app.features.beerlist.BeerListFragmentDirections
 import com.testapp.testapp_app.models.BeerBean
 import com.testapp.testapp_app.models.BeerStyleBean
 import com.testapp.testapp_app.setup.BaseFragment
@@ -81,7 +82,7 @@ class BeerStylesListFragment: BaseFragment(), BeerStyleAdapter.OnItemListDelegat
                 setContentView(R.layout.dialog_random_beer)
 
                 fillDialogUI(this, randomBeer)
-                setDialogButtonsActions(this)
+                setDialogButtonsActions(this, randomBeer)
 
                 window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                 show()
@@ -89,9 +90,11 @@ class BeerStylesListFragment: BaseFragment(), BeerStyleAdapter.OnItemListDelegat
         }
     }
 
-    private fun setDialogButtonsActions(dialog: Dialog) {
+    private fun setDialogButtonsActions(dialog: Dialog, randomBeer: BeerBean) {
         dialog.buttonSeeDetails?.setOnClickListener {
-            //TODO: Open beer details
+            val action = BeerStylesListFragmentDirections.actionStylesToBeerDetail(randomBeer)
+            findNavController().navigate(action)
+            dialog.cancel()
         }
         dialog.buttonClose?.setOnClickListener {
             dialog.cancel()

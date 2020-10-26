@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/beerStylesListFragment"
         android:name="com.testapp.testapp_app.features.stylesbeerlist.BeerStylesListFragment"
-        android:label="@string/app_name"
+        android:label="@string/app_fragment_styles"
         tools:layout="@layout/fragment_beer_style_list">
         <action
             android:id="@+id/action_styles_to_beers_list"
@@ -16,18 +16,25 @@
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
             app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_styles_to_beer_detail"
+            app:destination="@id/beerDetailFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right"/>
     </fragment>
 
     <fragment
         android:id="@+id/beerListFragment"
         android:name="com.testapp.testapp_app.features.beerlist.BeerListFragment"
-        android:label="@string/app_name"
+        android:label="@string/app_fragment_beers"
         tools:layout="@layout/fragment_beer_list">
         <argument
             android:name="styleSelected"
             app:argType="integer" />
         <action
-            android:id="@+id/action_beerLis_to_detail"
+            android:id="@+id/action_beerList_to_detail"
             app:destination="@id/beerDetailFragment"
             app:enterAnim="@anim/enter_from_right"
             app:exitAnim="@anim/exit_to_left"
@@ -38,10 +45,30 @@
     <fragment
         android:id="@+id/beerDetailFragment"
         android:name="com.testapp.testapp_app.features.beerdetail.BeerDetailFragment"
-        android:label="@string/app_name"
+        android:label="@string/app_fragment_detail"
         tools:layout="@layout/fragment_beer_detail">
         <argument
             android:name="selectedBeer"
             app:argType="com.testapp.testapp_app.models.BeerBean" />
     </fragment>
+
+    <fragment
+        android:id="@+id/beerFavsListFragment"
+        android:name="com.testapp.testapp_app.features.favorites.BeerFavsListFragment"
+        android:label="@string/app_fragment_beers"
+        tools:layout="@layout/fragment_beer_favs_list">
+        <action
+            android:id="@+id/action_beerFavsList_to_detail"
+            app:destination="@id/beerDetailFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right"/>
+    </fragment>
+    <action
+        android:id="@+id/action_global_beer_favs"
+        app:destination="@id/beerFavsListFragment"
+        app:enterAnim="@anim/slide_up"
+        app:launchSingleTop="true"
+        app:popExitAnim="@anim/slide_down" />
 </navigation>
