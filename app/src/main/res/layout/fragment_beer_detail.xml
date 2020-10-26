@@ -5,15 +5,6 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-<!--    <ImageView-->
-<!--        android:id="@+id/imageBeer"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="250dp"-->
-<!--        android:scaleType="centerCrop"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
     <com.testapp.testapp_app.setup.ZoomClass
         android:id="@+id/imageBeer"
         android:layout_width="match_parent"
