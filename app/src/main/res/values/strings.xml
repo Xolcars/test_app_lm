@@ -9,7 +9,27 @@
 
     <string name="category">Category:</string>
     <string name="detail">Detail</string>
-    <string name="opening_hours">Horario de apertura</string>
-    <string name="not_content">No hay ningún servicio disponible</string>
+    <string name="not_content">No content available</string>
     <string name="abv_percent">%s\%% - %s\%% Alcohol percent</string>
+    <string name="abv_percent_one">%s\%% Alcohol</string>
+
+    <string name="abv_percent_random_beer">%s\%%</string>
+    <string name="new_random_beer_title">Discover Today\'s new random beer</string>
+    <string name="beer_image_cd">Beer Image</string>
+    <string name="see_details">See details</string>
+    <string name="close">Close</string>
+    <string name="food_pairing">Try to match this beer with %s</string>
+    <string name="beer_retired">This beer are retired</string>
+    <string name="beer_not_retired">On Sale</string>
+    <string name="what_you_want">what you want</string>
+    <string name="image_beer_placeholder_url">https://p2d7x8x2.stackpathcdn.com/wordpress/wp-content/uploads/2020/03/iStock-1040303026.jpg</string>
+    <string name="info">INFO</string>
+    <string name="more">MORE</string>
+    <string name="add_to_favs">Add to Favs</string>
+    <string name="remove_to_favs">Remove to Favs</string>
+
+    <string name="app_fragment_styles">Beer Styles</string>
+    <string name="app_fragment_beers">Beers</string>
+    <string name="app_fragment_detail">Beer Detail</string>
+    <string name="fav">Fav</string>
 </resources>

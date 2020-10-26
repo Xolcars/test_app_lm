@@ -106,6 +106,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.1'
     implementation 'androidx.navigation:navigation-runtime-ktx:2.3.1'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.1'
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.6.2'

@@ -17,7 +17,6 @@ fun BaseActivity.showProgressDialog() {
         show()
         this@showProgressDialog.progressDialog = this
     }
-
 }
 
 fun BaseActivity.hideProgressDialog() {

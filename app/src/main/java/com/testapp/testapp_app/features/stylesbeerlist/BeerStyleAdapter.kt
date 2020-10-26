@@ -1,4 +1,4 @@
-package com.testapp.testapp_app.features.serviceslist
+package com.testapp.testapp_app.features.stylesbeerlist
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -57,8 +57,7 @@ class BeerStyleAdapter(private val context: Context,
         private fun fillCellView() {
             view.textName?.text = item.name
             view.textDescription?.text = item.description
-            view.textAbv?.text = view.context.getString(R.string.abv_percent, item.abvMin, item.abvMax)
-            //Picasso.get().load(item.logo?.url).into(view.imageLogo)
+            view.textAbv?.text = view.context.getString(R.string.abv_percent, item.abvMin ?: "", item.abvMax ?: "")
         }
     }
     //endregion ViewHolder

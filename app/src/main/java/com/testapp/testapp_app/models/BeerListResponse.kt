@@ -13,14 +13,14 @@ data class BeerListResponse(
 
 @Parcelize
 data class BeerBean(
-    @SerializedName("id") var id: Int,
+    @SerializedName("id") var id: String,
     @SerializedName("nameDisplay") var name: String,
     @SerializedName("description") var description: String?,
     @SerializedName("foodPairings") var foodPairings: String?,
     @SerializedName("abv") var abv: String?,
     @SerializedName("isRetired") var isRetired: Boolean,
     @SerializedName("style") var style: BeerStyleBean?,
-    @SerializedName("labels") var images: ArrayList<PhotoBean>?
+    @SerializedName("labels") var images:PhotoBean?
 ): Parcelable
 
 @Parcelize
