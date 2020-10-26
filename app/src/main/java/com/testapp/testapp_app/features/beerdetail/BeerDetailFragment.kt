@@ -1,14 +1,17 @@
 package com.testapp.testapp_app.features.beerdetail
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayoutMediator
 import com.squareup.picasso.Picasso
 import com.testapp.testapp_app.R
 import com.testapp.testapp_app.setup.BaseFragment
+import kotlinx.android.synthetic.main.dialog_big_image.*
 import kotlinx.android.synthetic.main.fragment_beer_detail.*
 import org.koin.android.ext.android.inject
 
@@ -36,6 +39,7 @@ class BeerDetailFragment: BaseFragment() {
         setupViewModel()
         fillUI()
         buttonFavSetOnClickListener()
+        onImageClickListener()
     }
     //endregion Override Methods
 
@@ -83,11 +87,33 @@ class BeerDetailFragment: BaseFragment() {
         }
     }
 
+    private fun onImageClickListener() {
+        imageBeer?.setOnLongClickListener {
+            showDialogBigImage()
+            true
+        }
+    }
+
     private fun fillButtonUI() {
         if(viewModel.isBeerOnFavs()) {
             buttonFav?.text = getString(R.string.remove_to_favs)
         } else {
             buttonFav?.text = getString(R.string.add_to_favs)
+        }
+    }
+
+    private fun showDialogBigImage() {
+        context?.let {
+            Dialog(it).apply {
+                setCancelable(true)
+                setContentView(R.layout.dialog_big_image)
+
+                val urlImage = selectedBeer?.images?.large ?: getString(R.string.image_beer_placeholder_url)
+                Picasso.get().load(urlImage).into(imageBig)
+
+                window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                show()
+            }
         }
     }
     //endregion Methods
